@@ -7,13 +7,13 @@ import Messages from './pages/Messages';
 import Connections from './pages/Connections';
 import Discover from './pages/Discover';
 import Profile from './pages/Profile';
-import CreatePost from './components/CreatePost';
+import CreatePost from './pages/CreatePost';
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login />}></Route>
+        <Route path='/' element={<Login />}>
         <Route index element={<Feed />}/>
         <Route path='messages' element={<Messages />} />
         <Route path='messages/:userId' element={<ChatBox />} />
@@ -22,6 +22,7 @@ const App = () => {
         <Route path='profile' element={<Profile />} />
         <Route path='profile/:profileId' element={<Profile />} />
         <Route path='create-post' element={<CreatePost />} />
+        </Route>
       </Routes>
     </>
   )
