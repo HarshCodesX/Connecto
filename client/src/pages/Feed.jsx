@@ -8,6 +8,7 @@ const Feed = () => {
 
   const fetchFeeds = async () => {
     setfeeds(dummyPostsData);
+    setLoading(false);
   }
   useEffect(() => {
     fetchFeeds();
@@ -18,14 +19,17 @@ const Feed = () => {
       {/* Stories and post list */}
       <div>
         <h1>Stories here</h1>
-        <div>
+        <div className='p-4 space-y-6'>
           list of posts
         </div>
       </div>
 
       {/* right sidebar */}
       <div>
-
+        <div>
+          <h1>Sponsered</h1>
+        </div>
+        <h1>Recent messages</h1>
       </div>
     </div>
   ) : <Loading/>
