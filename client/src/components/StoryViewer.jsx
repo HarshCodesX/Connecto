@@ -7,7 +7,7 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
     let timer, progressInterval;
     if (viewStory && viewStory.media_type !== "video") {
       setProgress(0);
-      const duration = 10000;
+      const duration = 5000; // 5 seconds for images and text
       const setTime = 100;
       let elapsed = 0;
 
@@ -17,7 +17,7 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
         setProgress((elapsed / duration) * 100);
     }, setTime)
 
-    // close story after duration (10 seconds)
+    // close story after duration (5 seconds)
     timer = setTimeout(() => {
         setViewStory(null);
     }, duration);
