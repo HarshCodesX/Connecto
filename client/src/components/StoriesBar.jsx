@@ -55,7 +55,7 @@ const StoriesBar = () => {
             showModal && <StoryModal setShowModal={setShowModal} fetchStories={fetchStories}/>
         }
 
-        {/* View Story Modal if user clicks on any story */}
+        {/* View Story Modal */}
         {
             viewStory && <StoryViewer viewStory={viewStory} setViewStory={setViewStory} />
         }
