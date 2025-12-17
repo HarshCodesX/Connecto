@@ -21,6 +21,7 @@ const Feed = () => {
       <div>
         <StoriesBar/>
         <div className='p-4 space-y-6'>
+          {/* Posts List */}
           list of posts
         </div>
       </div>
