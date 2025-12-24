@@ -29,7 +29,7 @@ const PostCard = ({post}) => {
         </div>
 
         {/* Post Content */}
-        {post.content && <div classname='text-gray-800 text-sm whitespace-pre-line' dangerouslySetInnerHTML={{__html: postWithHashtags}} />}
+        {post.content && <div className='text-gray-800 text-sm whitespace-pre-line' dangerouslySetInnerHTML={{__html: postWithHashtags}} />}
 
         {/* Post Image */}
         <div className='grid grid-cols-2 gap-2'>
