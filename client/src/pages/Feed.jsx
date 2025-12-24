@@ -44,4 +44,4 @@ const Feed = () => {
   ) : <Loading/>
 }
 
-export default Feed
+export default Feed;
