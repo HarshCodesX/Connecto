@@ -8,7 +8,7 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
     if (viewStory && viewStory.media_type !== "video") {
       setProgress(0);
       const duration = 5000; // 5 seconds for images and text
-      const setTime = 100;
+      const setTime = 100; //every 100 milliseconds (i.e 0.1 second), we will be updating the progress bar
       let elapsed = 0;
 
     //   creating a interval function that will execute every 0.1 sec and increase the progress bar
