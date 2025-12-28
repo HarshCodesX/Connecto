@@ -8,6 +8,7 @@ const ChatBox = () => {
   const [image, setImage] = useState(null);
   const [user, setUser] = useState(dummyUserData);
   const messagesEndRef = useRef(null);
+  // comment
 
   const sendMessage = async () => {
 
