@@ -1,6 +1,5 @@
 import { Inngest } from "inngest";
 import User from "../models/User.js";
-import { Profiler } from "react";
 
 //Create a client to send and receove events
 export const inngest = new Inngest({id: "pingup-app"});
