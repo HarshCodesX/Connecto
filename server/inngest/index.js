@@ -30,6 +30,19 @@ const syncUserCreation = inngest.createFunction(
 )
 
 // Inngest function to update user data in database
+const syncUserUpdation = inngest.createFunction(
+    {id: "update-user-from-clerk"},
+    {event: "clerk/user.updated"},
+    async({event}) => {
+        const {id, first_name, last_name, email_addresses, image_url} = event.data;
+        const updatedUserData = {
+            email: email_addresses[0].email_address,
+            full_name: first_name + last_name,
+            profile_picture: image_url
+        }
+        await User.findByIdAndUpdate(id,updatedUserData);
+    }
+)
 
 //Create an epty array where we will export future Inngest functions
-export const functions = [syncUserCreation];
+export const functions = [syncUserCreation, syncUserUpdation];
