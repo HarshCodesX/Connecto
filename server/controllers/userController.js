@@ -113,6 +113,23 @@ export const discoverUsers = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.json({success: false, message: error.message});
+        res.status(400).json({success: false, message: error.message});
+    }
+}
+
+// Follow user
+export const followUser = async (req, res) => {
+    try {
+        const {userId} = req.auth;
+        const {id} = req.body;
+        const user = await User.findById(userId);
+        if(user.following.includes(id)){
+            return res.status(400).json({success: false, message: "You are already following this user"});
+        }
+        user.following.push(id);
+        await user.save(); //wait, what, user is just copy of data from db, can we do this?, gpt it
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({success: false, message: error.message});
     }
 }
