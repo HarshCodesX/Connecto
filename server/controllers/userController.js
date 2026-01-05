@@ -127,9 +127,35 @@ export const followUser = async (req, res) => {
             return res.status(400).json({success: false, message: "You are already following this user"});
         }
         user.following.push(id);
-        await user.save(); //wait, what, user is just copy of data from db, can we do this?, gpt it
+        await user.save();
+
+        const toUser = await User.findById(id);
+        toUser.followers.push(userId);
+        await toUser.save();
+
+        res.json({success: true, message: "Now you are following this user"});
     } catch (error) {
         console.log(error.message);
         res.status(400).json({success: false, message: error.message});
+    }
+}
+
+//unfollow user
+export const unfollowUser = async (req, res) => {
+    try {
+        const { userId } = req.auth;
+        const { id } = req.body;
+
+        const user = await User.findById(userId);
+        user.following = user.following.filter((user) => user != id);
+        await user.save();
+
+        const toUser = await User.findById(id);
+        toUser.followers = toUser.followers.filter((user) => user != id);
+        await toUser.save();
+
+        res.status(200).json({success: true, message: "Unfollowed this user"})
+    } catch (error) {
+        
     }
 }
