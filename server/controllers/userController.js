@@ -35,9 +35,12 @@ export const updateUserData = async (req, res) => {
         if(tempUser.username !== username){
             const user = await User.findOne({username});
             if(user){
-                //we will not change the username if it is already taken
+                //we will not change the username if it is already taken, and we will set the username to the existing username
                 username = tempUser.username;
             }
+        }
+        else{
+            return res.json({success: false, message: "Username should be different from the existing username"});
         }
         const updatedData = {
             username: username || tempUser.username,
