@@ -152,15 +152,16 @@ export const unfollowUser = async (req, res) => {
         const { id } = req.body;
 
         const user = await User.findById(userId);
-        user.following = user.following.filter((user) => user != id);
+        user.following = user.following.filter((user) => user !== id);
         await user.save();
 
         const toUser = await User.findById(id);
-        toUser.followers = toUser.followers.filter((user) => user != id);
+        toUser.followers = toUser.followers.filter((user) => user !== id);
         await toUser.save();
 
         res.status(200).json({success: true, message: "Unfollowed this user"})
     } catch (error) {
-        
+       console.log(error);
+       res.status(400).json({success: false, message: error.message}); 
     }
 }
