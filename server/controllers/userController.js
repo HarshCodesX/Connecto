@@ -49,11 +49,13 @@ export const updateUserData = async (req, res) => {
             full_name: full_name || tempUser.full_name
         }
 
+        //file upload middleware (multer) will put the images from the FE inside req.files
+        //stores like req.files = {profile: [{filename: "profile", originalname: "me.jpg", mimetype: "image/jpeg", path: "uploads/abc123.jpg"}]}
         const profile = req.files.profile && req.files.profile[0];
         const cover = req.files.cover && req.files.cover[0];
 
         if(profile){
-           const buffer = fs.readFileSync(profile.path);
+           const buffer = fs.readFileSync(profile.path); //Read the image file from disk and convert it into raw data (buffer)
            const response = await imagekit.upload({
             file: buffer,
             fileName: profile.originalname,
