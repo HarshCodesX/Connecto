@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import fs from "fs";
 import imagekit from "../configs/imageKit.js";
+import Connection from "../models/Connection.js";
 
 // Get user data using userId
 export const getUserData = async (req, res) => {
@@ -163,5 +164,42 @@ export const unfollowUser = async (req, res) => {
     } catch (error) {
        console.log(error);
        res.status(400).json({success: false, message: error.message}); 
+    }
+}
+
+// Send Connection Request
+export const sendConnectionRequest = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        const { id } = req.body;
+
+        // Check if the user has sent more than 20 connection requests in the last 24 hours
+        const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        const ConnectionRequests = await Connection.find({from_user_id: userId, created_at: {$gt: last24Hours}});
+        if(ConnectionRequests.length >= 20){
+            return res.json({success: false, message: "You have sent more than 20 connection requests in the last 24 hours"});
+        }
+
+        // Check if the users are already connected
+        const connection = await Connection.findOne({
+            $or: [
+                {from_user_id: userId, to_user_id: id},
+                {from_user_id: id, to_user_id: userId}
+            ]
+        })
+        if(!connection){
+            await Connection.create({
+                from_user_id: userId,
+                to_user_id: id
+            })
+            return res.status(200).json({success: true, message: "Connection request sent successfully"});
+        }
+        else if(connection && connection.status === 'accepted'){
+            return res.json({success: false, message: "You are already connected with this user"});
+        }
+        return res.json({success: false, message: 'Connection request pending'});
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, message: error.message});
     }
 }
