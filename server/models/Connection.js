@@ -1,4 +1,4 @@
-import mongoose from "mopngoose";
+import mongoose from "mongoose";
 const connectionSchema = new mongoose.Schema({
     from_user_id: {
         type: String,
