@@ -3,6 +3,7 @@ import fs from "fs";
 import imagekit from "../configs/imageKit.js";
 import Connection from "../models/Connection.js";
 import Post from "../models/Post.js";
+import { inngest } from "../inngest/index.js";
 
 // Get user data using userId
 export const getUserData = async (req, res) => {
@@ -189,10 +190,16 @@ export const sendConnectionRequest = async (req, res) => {
             ]
         })
         if(!connection){
-            await Connection.create({
+            const newConnection = await Connection.create({
                 from_user_id: userId,
                 to_user_id: id
             })
+
+            await inngest.send({
+                name: 'app/connection-request',
+                data: {connectionId: newConnection._id}
+            })
+
             return res.status(200).json({success: true, message: "Connection request sent successfully"});
         }
         else if(connection && connection.status === 'accepted'){
