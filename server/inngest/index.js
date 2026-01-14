@@ -105,7 +105,15 @@ const sendNewConnectionRequestReminder = inngest.createFunction(
             return {message: "Reminder sent"};
         });
     }
+)
 
+// Inngest Function to delete old stories aftere 24 hours
+const deleteStory = inngest.createFunction(
+    {id: "story-delete"},
+    {event: "app/story.delete"},
+    async ({event, step}) => {
+        
+    }
 )
 
 //Create an epty array where we will export future Inngest functions
