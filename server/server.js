@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
 
-app.get("/", (req, res) => {
+app.get("/", (res) => {
     res.send("server is running");
 })
 app.use('/api/ingest', serve({client: inngest, functions}));
