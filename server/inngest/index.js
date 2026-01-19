@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import Connection from "../models/Connection.js";
 import sendEmail from "../configs/nodeMailer.js";
 import Story from "../models/Story.js";
+import Message from "../models/Message.js";
 
 //Create a client to send and recover events
 export const inngest = new Inngest({id: "pingup-app"});
@@ -121,6 +122,24 @@ const deleteStory = inngest.createFunction(
             return {message: "Story deleted"};
     }
 )});
+
+const sendNotificationOfUnseenMessages = inngest.createFunction(
+    {id: "send-unseen-messages-notification"},
+    {cron: "TZ=America/New_York 0 9 * * *"}, // This function will run every day at 9 AM EST
+    async ({step}) => {
+        const messages = await Message.find({seen: false}).populate('to_user_id');
+        const unseenCount = {};
+
+        messages.map((message) => {
+            unseenCount[message.to_user_id._id] = (unseenCount[message.to_user_id._id] || 0) + 1;
+        });
+
+        for(const userId in unseenCount){
+            const user = await User.findById(userId);
+            const subject = `🔔 You have ${unseenCount[userId]} unseen messages`;
+        }
+    }
+)
 
 //Create an epty array where we will export future Inngest functions
 export const functions = [syncUserCreation, syncUserUpdation, syncUserDeletion, sendNewConnectionRequestReminder, deleteStory];
