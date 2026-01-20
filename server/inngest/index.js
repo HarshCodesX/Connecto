@@ -142,4 +142,4 @@ const sendNotificationOfUnseenMessages = inngest.createFunction(
 )
 
 //Create an epty array where we will export future Inngest functions
-export const functions = [syncUserCreation, syncUserUpdation, syncUserDeletion, sendNewConnectionRequestReminder, deleteStory];
+export const functions = [syncUserCreation, syncUserUpdation, syncUserDeletion, sendNewConnectionRequestReminder, deleteStory, sendNotificationOfUnseenMessages];
