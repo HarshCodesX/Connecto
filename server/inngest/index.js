@@ -137,7 +137,22 @@ const sendNotificationOfUnseenMessages = inngest.createFunction(
         for(const userId in unseenCount){
             const user = await User.findById(userId);
             const subject = `🔔 You have ${unseenCount[userId]} unseen messages`;
+
+            const body = `<div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h2>Hi ${user.full_name},</h2>
+                <p>You have ${unseenCount[userId]} unseen messages waiting for you on PingUp.</p>
+                <p>Click <a href="${process.env.FRONTEND_URL}/messages" style="color: #10b981;">here</a> to check your messages.</p>
+                <br />
+                <p>Thanks, <br />PingUp - Stay Connected</p>
+            </div>`;
+
+            await sendEmail({
+              to: user.email,
+              subject,
+              body  
+            });
         }
+        return {message: "Notification sent to all users with unseen messages"};
     }
 )
 
