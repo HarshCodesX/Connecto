@@ -108,6 +108,3 @@ export const getUserRecentMessages = async (req, res) => {
         res.status(500).json({success: false, message: error.message});
     }
 }
-
-//comment for streak
-//comment for streak

@@ -17,14 +17,14 @@ app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
 
-app.get("/", (res) => {
+app.get("/", (req, res) => {
     res.send("server is running");
 })
 app.use('/api/ingest', serve({client: inngest, functions}));
 app.use('/api/user', userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/story", storyRouter);
-app.use("/api/message", messageRouter)
+app.use("/api/message", messageRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
