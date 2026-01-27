@@ -269,7 +269,7 @@ export const getUserProfiles = async (req, res) => {
             return res.status(404).json({success: false, message: "User not found"});
         }
         const posts = await Post.find({user: profileId}).populate('user');
-        res.status(200).json({success: false, profile, posts});
+        res.status(200).json({success: true, profile, posts});
     } catch (error) {
         console.log(error);
         res.status(400).json({success: false, message: error.message});
