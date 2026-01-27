@@ -26,7 +26,7 @@ const Profile = () => {
         headers: {Authorization: `Bearer ${token}`}
       });
       if(data.success){
-        setUser(data.user);
+        setUser(data.profile);
         setPosts(data.posts);
       }
       else{
