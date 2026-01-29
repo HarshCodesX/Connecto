@@ -1,7 +1,6 @@
 import { BadgeCheck, Heart, MessageCircle, Share2 } from 'lucide-react';
 import moment from 'moment';
 import { useState } from 'react';
-import { dummyUserData } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
