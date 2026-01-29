@@ -74,7 +74,7 @@ export const likePost = async (req, res) => {
             res.status(200).json({success: true, message: "Post unliked"});
         }
         else{
-            post.likes-count.push(userId);
+            post.likes_count.push(userId);
             await post.save();
             res.status(200).json({success: true, message: "Post liked"});
         }
