@@ -3,20 +3,32 @@ import { dummyConnectionsData } from '../assets/assets';
 import { Search, User } from 'lucide-react';
 import UserCard from '../components/userCard.jsx';
 import Loading from '../components/loading.jsx';
+import api from '../api/axios.js';
+import { useAuth } from '@clerk/clerk-react';
+import toast from 'react-hot-toast';
 
 const Discover = () => {
   const [input, setInput] = useState("");
   const [users, setUsers] = useState(dummyConnectionsData);
   const [loading, setLoading] = useState(false);
 
+  const { getToken } = useAuth();
+
   const handleSearch = async (e) => {
     if(e.key === 'Enter'){
-      setUsers([]); // clear previous results
-      setLoading(true);
-      setTimeout(() => {
-        setUsers(dummyConnectionsData);
+      try {
+        setUsers([]);
+        setLoading(true);
+        const { data } = await api.post('/api/user/discover', {input}, {
+          headers: {Authorization: `Bearer ${await getToken()}`}
+        });
+        data.success ? setUsers(data.users) : toast.error(data.message);
         setLoading(false);
-      }, 1000);
+        setInput('');
+      } catch (error) {
+        toast.error(error.message);
+      }
+      setLoading(false);
     }
   }
 
