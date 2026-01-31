@@ -128,7 +128,7 @@ export const discoverUsers = async (req, res) => {
 // Follow user
 export const followUser = async (req, res) => {
     try {
-        const {userId} = req.auth;
+        const {userId} = req.auth();
         const {id} = req.body;
         const user = await User.findById(userId);
         if(user.following.includes(id)){
@@ -151,7 +151,7 @@ export const followUser = async (req, res) => {
 //unfollow user
 export const unfollowUser = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const { id } = req.body;
 
         const user = await User.findById(userId);
