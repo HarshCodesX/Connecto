@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import api from "../../api/axios.js";
 
 const initialState = {
-    value: [],
+    messages: [],
 }
 
 export const fetchMessages = createAsyncThunk('messages/fetchMessages', async ({token, userId}) => {

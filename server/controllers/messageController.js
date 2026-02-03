@@ -90,7 +90,7 @@ export const getChatMessages = async (req, res) => {
 
        // Mark messages as seen
        await Message.updateMany({from_user_id: to_user_id, to_user_id: userId}, {seen: true});
-       res.status(500).json({success: true, messages});
+       res.status(200).json({success: true, messages});
     } catch (error) {
         console.log(error);
         res.status(500).json({success: false, message: error.message});

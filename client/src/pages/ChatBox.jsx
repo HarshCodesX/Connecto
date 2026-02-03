@@ -18,7 +18,7 @@ const ChatBox = () => {
   const [user, setUser] = useState(null);
   const messagesEndRef = useRef(null);
 
-  const connections = useSelector((state) => state.conections.connections);
+  const connections = useSelector((state) => state.connections.connections);
 
   const fetchUserMessages = async () => {
     try {
@@ -86,7 +86,7 @@ const ChatBox = () => {
       <div className='p-5 md:px-10 h-full overflow-y-scroll'>
         <div className='space-y-4 max-w-4xl mx-auto'>
           {
-            messages.toSorted((a,b) => new Date(a.createdAt) - new Date(b.createdAt)).map((message, index) => (
+            (messages || []).toSorted((a,b) => new Date(a.createdAt) - new Date(b.createdAt)).map((message, index) => (
               <div className={`flex flex-col ${message.to_user_id !== user._id ? 'items-start' : 'items-end'}`} key={index}>
                 <div className={`p-2 text-sm max-w-sm bg-white text-slate-700 rounded-lg shadow ${message.to_user_id !== user._id ? 'rounded-bl-none' : 'rounded-br-none'}`}>
                   {
