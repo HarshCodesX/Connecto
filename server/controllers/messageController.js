@@ -64,10 +64,13 @@ export const sendMessage = async (req, res) => {
         res.status(200).json({success: true, message});
 
         // Send message to to_user_id using server-side-events (SSE)
-
         const messageWithUserData = await Message.findById(message._id).populate('from_user_id');
-        if(connections[to_user_id]){
-            connections[to_user_id].write(`data: new_message\ndata: ${JSON.stringify(messageWithUserData)}\n\n`);
+        if (connections[to_user_id]) {
+            const ssePayload = {
+                success: true,
+                message: messageWithUserData,
+            };
+            connections[to_user_id].write(`data: ${JSON.stringify(ssePayload)}\n\n`);
         }
     } catch (error) {
         console.log(error);

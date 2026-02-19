@@ -46,13 +46,20 @@ const App = () => {
     if(user){
       const eventSource = new EventSource(import.meta.env.VITE_BASEURL + '/api/message/' + user.id);
       eventSource.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        if(pathnameRef.current === ('/messages/' + message.from_user_id._id)){
-          dispatch(addMessage)
-        } else{
-          toast.custom((t) => (
-            <Notification t={t} message={message} />
-          ), {position: "bottom-right"});
+        try {
+          const payload = JSON.parse(event.data);
+          const message = payload.message ?? payload;
+          const fromId = message.from_user_id?._id || message.from_user_id;
+
+          if(pathnameRef.current === (`/messages/${fromId}`)){
+            dispatch(addMessage(message));
+          } else{
+            toast.custom((t) => (
+              <Notification t={t} message={message} />
+            ), {position: "bottom-right"});
+          }
+        } catch (error) {
+          console.error('Failed to handle SSE message', error, event.data);
         }
       }
       return () => {
