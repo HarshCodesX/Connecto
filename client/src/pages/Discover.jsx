@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, User } from 'lucide-react';
 import UserCard from '../components/userCard.jsx';
-import Loading from '../components/loading.jsx';
+import Loading from '../components/Loading.jsx';
 import api from '../api/axios.js';
 import { useAuth } from '@clerk/clerk-react';
 import toast from 'react-hot-toast';

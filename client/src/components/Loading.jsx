@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Loading = ({height = '100vh'}) => {
   return (
@@ -8,4 +8,4 @@ const Loading = ({height = '100vh'}) => {
   )
 }
 
-export default Loading
+export default Loading;
