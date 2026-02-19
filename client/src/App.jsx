@@ -51,6 +51,9 @@ const App = () => {
           const message = payload.message ?? payload;
           const fromId = message.from_user_id?._id || message.from_user_id;
 
+          // Broadcast message so other components (e.g. RecentMessages) can update instantly
+          window.dispatchEvent(new CustomEvent('connecto:new_message', { detail: message }));
+
           if(pathnameRef.current === (`/messages/${fromId}`)){
             dispatch(addMessage(message));
           } else{
