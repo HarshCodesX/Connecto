@@ -1,4 +1,4 @@
-// discover component
+// Discover component for searching and discovering users
 import React, { useEffect, useState } from 'react';
 import { Search, User } from 'lucide-react';
 import UserCard from '../components/userCard.jsx';
